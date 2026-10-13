@@ -1,0 +1,231 @@
+:root {
+  /* Marca. El lima y el verde son ACENTOS: ninguno de los dos aguanta
+     texto blanco encima (1.5:1 y 2.9:1). Lo accionable usa --accent. */
+  --lime: #9fe800;
+  --brand: #00ae41;
+
+  --bg: #f6f9f3;
+  --card: #ffffff;
+  --text: #15200f;
+  --heading: #04441c;
+  --muted: #5c6a57;
+  --border: #dfe7d9;
+
+  --accent: #00762c;        /* verde profundo: 5.8:1 con blanco */
+  --accent-text: #ffffff;
+  --progress: var(--brand);
+
+  --error-bg: #fdeceb;
+  --error-text: #9e2b26;
+  --ok-bg: #eaf7ec;
+  --ok-text: #00762c;
+  --radius: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Sobre oscuro los roles se dan vuelta: el lima llega a 12.6:1,
+       asi que pasa a ser el color de accion, con texto tinta. */
+    --bg: #0d120b;
+    --card: #161d13;
+    --text: #e9efe4;
+    --heading: #e9efe4;
+    --muted: #9aa894;
+    --border: #2b3527;
+
+    --accent: #9fe800;
+    --accent-text: #04441c;
+    --progress: var(--lime);
+
+    --error-bg: #3a1d1c;
+    --error-text: #ffb4b0;
+    --ok-bg: #14301c;
+    --ok-text: #9fe800;
+  }
+}
+
+* { box-sizing: border-box; }
+
+a { color: var(--accent); }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* 16px es intencional: con menos, iOS hace zoom al enfocar un input. */
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  color: var(--heading);
+  margin: 0 0 .35rem;
+  letter-spacing: -.02em;
+}
+
+header p {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  font-size: .9rem;
+  margin-bottom: .35rem;
+}
+
+.field { margin-bottom: 1.1rem; }
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select {
+  width: 100%;
+  padding: .7rem .75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  appearance: none;
+}
+
+input:focus-visible,
+select:focus-visible,
+button:focus-visible,
+.filebox:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: .82rem;
+  margin-top: .35rem;
+}
+
+/* Zona de archivo: el input real queda oculto pero accesible por teclado. */
+.filebox {
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  display: block;
+  transition: border-color .15s, background .15s;
+}
+.filebox:hover { border-color: var(--accent); }
+.filebox.has-file {
+  border-style: solid;
+  border-color: var(--accent);
+  text-align: left;
+}
+.filebox input[type="file"] {
+  position: absolute;
+  width: 1px; height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.filebox .filename {
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.check {
+  display: flex;
+  gap: .6rem;
+  align-items: flex-start;
+  font-weight: 400;
+  font-size: .88rem;
+  line-height: 1.45;
+  cursor: pointer;
+}
+.check input { margin-top: .2rem; flex: 0 0 auto; width: 1.05rem; height: 1.05rem; }
+
+button[type="submit"] {
+  width: 100%;
+  padding: .85rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--accent-text);
+  background: var(--accent);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button[type="submit"]:disabled { opacity: .6; cursor: progress; }
+
+.bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: .9rem;
+}
+.bar > i {
+  display: block;
+  height: 100%;
+  background: var(--progress);
+  transition: width .2s;
+}
+
+.msg {
+  padding: .75rem .9rem;
+  border-radius: 8px;
+  font-size: .9rem;
+  margin-bottom: 1rem;
+}
+.msg.error { background: var(--error-bg); color: var(--error-text); }
+
+.done { text-align: center; padding: 2rem 1rem; }
+.done .tick {
+  width: 3rem; height: 3rem;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: var(--ok-bg);
+  color: var(--ok-text);
+  font-size: 1.6rem;
+  display: grid;
+  place-items: center;
+}
+.done h2 { margin: 0 0 .5rem; font-size: 1.2rem; }
+.done p { color: var(--muted); margin: 0 0 1.25rem; }
+
+.linkish {
+  background: none;
+  border: 0;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: .8rem;
+  color: var(--muted);
+}
+footer a { color: inherit; }
+
+.legal { max-width: 40rem; }
+.legal h2 { font-size: 1.05rem; margin: 1.75rem 0 .5rem; }
+.legal p, .legal li { color: var(--muted); font-size: .93rem; }
